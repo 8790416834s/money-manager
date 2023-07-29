@@ -1,0 +1,52 @@
+.app-container {
+  height: 100vh;
+  background-color: #ffffff;
+  padding: 50px;
+}
+.message-container {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/money-manager/money-manager-bg.png');
+  background-size: cover;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px;
+}
+.blue {
+  color: blue;
+}
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+.transaction-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.add-transaction-container {
+  display: flex;
+  flex-direction: column;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 5px;
+  padding: 40px;
+}
+.add-button {
+  background-color: #0b69ff;
+  color: #ffffff;
+}
+.history-container {
+  display: flex;
+  flex-direction: column;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 5px;
+  padding: 40px;
+}
+.sub-heading-container {
+  display: flex;
+  border: 1px solid black;
+}
+.sub-heading {
+  font-weight: bold;
+  margin: 10px;
+}

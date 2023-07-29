@@ -1,0 +1,7 @@
+.list-container {
+  display: flex;
+}
+.delete {
+  height: 25px;
+  width: 25px;
+}
