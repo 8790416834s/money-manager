@@ -23,6 +23,7 @@ class MoneyManager extends Component {
   state = {
     balanceList: initialBalanceList,
     title: '',
+    type: '',
     amount: 0,
     balance: 0,
     income: 0,
@@ -34,7 +35,7 @@ class MoneyManager extends Component {
   }
 
   onChangeAmount = event => {
-    this.setState({amount: event.target.value})
+    this.setState({amount: parseInt(event.target.value)})
   }
 
   onChangeType = event => {
@@ -43,15 +44,7 @@ class MoneyManager extends Component {
 
   onAddButton = event => {
     event.preventDefault()
-    const {
-      balanceList,
-      title,
-      amount,
-      type,
-      balance,
-      income,
-      expenses,
-    } = this.state
+    const {title, amount, type} = this.state
     const newList = {
       id: uuidv4(),
       title,
@@ -60,11 +53,36 @@ class MoneyManager extends Component {
     }
     this.setState(prevState => ({
       balanceList: [...prevState.balanceList, newList],
+      title: '',
+      amount: '',
+    }))
+    if (type === 'Income') {
+      this.setState(prevState => ({
+        income: prevState.income + amount,
+        balance: prevState.balance + amount,
+      }))
+    } else if (type === 'Expenses') {
+      this.setState(prevState => ({
+        expenses: prevState.expenses + amount,
+        balance: prevState.balance - amount,
+      }))
+    }
+  }
+
+  deleteItem = id => {
+    const {balanceList} = this.state
+    const filteredList = balanceList.filter(each => each.id !== id)
+    const findItem = balanceList.filter(each => each.id === id)
+    this.setState(prevState => ({
+      balanceList: filteredList,
+      income: prevState.income - parseInt(findItem[0].amount),
+      expenses: prevState.expenses - parseInt(findItem[0].amount),
+      balance: prevState.balance - parseInt(findItem[0].amount),
     }))
   }
 
   render() {
-    const {balanceList} = this.state
+    const {balanceList, balance, income, expenses} = this.state
 
     return (
       <div className="app-container">
@@ -74,11 +92,9 @@ class MoneyManager extends Component {
             Welcome back to your <span className="blue">Money Manager</span>
           </p>
         </div>
-        <ul>
-          {balanceList.map(each => (
-            <MoneyDetails key={each.id} detailsList={each} />
-          ))}
-        </ul>
+
+        <MoneyDetails balance={balance} income={income} expenses={expenses} />
+
         <div className="transaction-container">
           <div className="add-transaction-container">
             <form className="form-container" onSubmit={this.onAddButton}>
@@ -98,7 +114,7 @@ class MoneyManager extends Component {
                 onChange={this.onChangeAmount}
               />
               <label htmlFor="types">TYPE</label>
-              <select className="types">
+              <select className="types" onChange={this.onChangeType}>
                 {transactionTypeOptions.map(each => (
                   <option className={each.optionId} value={each.displayText}>
                     {each.displayText}
@@ -115,11 +131,19 @@ class MoneyManager extends Component {
           <div className="history-container">
             <h1 className="history">History</h1>
             <div className="sub-heading-container">
-              <p className="sub-heading">Title</p>
-              <p className="sub-heading">Amount</p>
-              <p className="sub-heading">Type</p>
-              <ul>
-                <TransactionItem />
+              <div className="heading-section">
+                <p className="sub-heading">Title</p>
+                <p className="sub-heading">Amount</p>
+                <p className="sub-heading">Type</p>
+              </div>
+              <ul className="list-container">
+                {balanceList.map(each => (
+                  <TransactionItem
+                    key={each.id}
+                    detailsList={each}
+                    deleteItem={this.deleteItem}
+                  />
+                ))}
               </ul>
             </div>
           </div>

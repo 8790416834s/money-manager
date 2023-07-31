@@ -1,7 +1,10 @@
-.list-container {
+.list-item-container {
   display: flex;
 }
 .delete {
   height: 25px;
   width: 25px;
+}
+.list-item {
+  margin: 10px;
 }

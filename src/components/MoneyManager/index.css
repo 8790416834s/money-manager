@@ -44,9 +44,18 @@
 }
 .sub-heading-container {
   display: flex;
+  flex-direction: column;
   border: 1px solid black;
+}
+.heading-section {
+  display: flex;
 }
 .sub-heading {
   font-weight: bold;
   margin: 10px;
+}
+.list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }

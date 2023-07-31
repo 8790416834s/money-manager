@@ -1,18 +1,24 @@
 import './index.css'
 
-const TransactionItem = () => {
+const TransactionItem = props => {
+  const {detailsList, deleteItem} = props
+  const {id, type, amount, title} = detailsList
+
+  const onDelete = () => {
+    deleteItem(id)
+  }
   return (
-    <div className="list-container">
-      <p>title of amount</p>
-      <p>balance Amount</p>
-      <p>type of amount</p>
+    <li className="list-item-container">
+      <p className="list-item">{title}</p>
+      <p className="list-item">{amount}</p>
+      <p className="list-item">{type}</p>
       <img
         src="https://assets.ccbp.in/frontend/react-js/money-manager/delete.png"
         alt="delete"
         className="delete"
+        onClick={onDelete}
       />
-    </div>
+    </li>
   )
 }
-
 export default TransactionItem
